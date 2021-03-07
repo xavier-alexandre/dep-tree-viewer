@@ -21,7 +21,7 @@
       "function": {
         "deptreeviewer4ce3e2a6": {
           "deploymentBucketName": "amplify-deptreeviewer-dev-133627-deployment",
-          "s3Key": "amplify-builds/deptreeviewer4ce3e2a6-6343736e6c45544f3871-build.zip"
+          "s3Key": "amplify-builds/deptreeviewer4ce3e2a6-65444871553369533431-build.zip"
         }
       }
     }

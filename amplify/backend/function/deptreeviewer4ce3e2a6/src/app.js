@@ -9,6 +9,8 @@ See the License for the specific language governing permissions and limitations 
 var express = require("express");
 var bodyParser = require("body-parser");
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
+var memoize = require("lodash/memoize");
+var axios = require("axios");
 
 // declare a new express app
 var app = express();
@@ -29,8 +31,24 @@ app.use(function (req, res, next) {
 app.get("/tree", function (req, res) {
   const pkg = req.query.package;
   const version = req.query.version;
+  console.log("Package", pkg);
+  console.log("Version", version);
+  const getDirectDependencies = () =>
+    axios.get(`https://registry.npmjs.org/${pkg}/${version}`);
+
+  const getDirectDependenciesMemoized = memoize(getDirectDependencies);
+  console.log("Will call NPM api");
+  const directDepenencies = getDirectDependenciesMemoized();
+  console.log("Finished calling NPM api");
+
   // Add your code here
-  res.json({ success: "get call succeed!", pkg, version, url: req.url });
+  res.json({
+    success: "get call succeed!",
+    pkg,
+    version,
+    directDepenencies,
+    url: req.url,
+  });
 });
 
 app.listen(3000, function () {
