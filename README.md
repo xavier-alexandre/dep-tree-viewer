@@ -32,8 +32,8 @@ Given the limited time available, I couldn't handle the following topics:
 
 - Currently, only the **direct** dependencies of a package are fetched. Ideally, I would want to recursively fetch all dependencies in order to build the complete dependencies graph.
 - Handle edge cases, like:
-  - no package in the input
-  - no version in the input
+  - no package in the input (I use `"express"` by default when empty)
+  - no version in the input (I use `"4.17.1"`)
   - wrong package name
   - wrong version
   - no connectivity to the backend

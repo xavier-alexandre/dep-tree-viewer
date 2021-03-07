@@ -12,6 +12,7 @@ const App = () => {
         <div style={{ display: "flex" }}>
           <input type="text" id="pkgInput" placeholder="Package" />
           <input type="text" id="pkgVersion" placeholder="Version (X.Y.Z)" />
+
           <button
             onClick={() => {
               setVersion(document.getElementById("pkgVersion").value);
