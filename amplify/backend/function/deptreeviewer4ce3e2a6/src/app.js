@@ -24,31 +24,35 @@ app.use(function (req, res, next) {
   next();
 });
 
-/**********************
- * Example get method *
- **********************/
-
-app.get("/tree", function (req, res) {
+app.get("/tree", async (req, res) => {
   const pkg = req.query.package;
   const version = req.query.version;
   console.log("Package", pkg);
   console.log("Version", version);
   const getDirectDependencies = () =>
     axios.get(`https://registry.npmjs.org/${pkg}/${version}`);
-
   const getDirectDependenciesMemoized = memoize(getDirectDependencies);
-  console.log("Will call NPM api");
-  const directDepenencies = getDirectDependenciesMemoized();
-  console.log("Finished calling NPM api");
 
-  // Add your code here
-  res.json({
-    success: "get call succeed!",
-    pkg,
-    version,
-    directDepenencies,
-    url: req.url,
-  });
+  try {
+    console.log("Will call NPM api");
+    const deps = await getDirectDependenciesMemoized();
+    // axios
+    //   .get(`https://registry.npmjs.org/${pkg}/${version}`)
+    //   .then((res) => console.log(res));
+
+    // const directDepenencies = await getDirectDependenciesMemoized();
+    console.log("Finished calling NPM api", deps);
+    // Add your code here
+    res.json({
+      success: "get call succeed!",
+      pkg,
+      version,
+      //   directDepenencies,
+      url: req.url,
+    });
+  } catch (error) {
+    // Send error 500
+  }
 });
 
 app.listen(3000, function () {
