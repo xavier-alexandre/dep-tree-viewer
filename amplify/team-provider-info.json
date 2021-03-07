@@ -10,6 +10,20 @@
       "StackName": "amplify-deptreeviewer-dev-133627",
       "StackId": "arn:aws:cloudformation:eu-west-1:268761720657:stack/amplify-deptreeviewer-dev-133627/bb052350-7f41-11eb-bb5e-02364ade655f",
       "AmplifyAppId": "dsj0sj3dcjqg1"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dsj0sj3dcjqg1",
+          "type": "cicd"
+        }
+      },
+      "function": {
+        "deptreeviewer4ce3e2a6": {
+          "deploymentBucketName": "amplify-deptreeviewer-dev-133627-deployment",
+          "s3Key": "amplify-builds/deptreeviewer4ce3e2a6-6343736e6c45544f3871-build.zip"
+        }
+      }
     }
   }
 }
