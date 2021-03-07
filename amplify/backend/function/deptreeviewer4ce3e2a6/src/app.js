@@ -27,55 +27,10 @@ app.use(function (req, res, next) {
  **********************/
 
 app.get("/tree", function (req, res) {
+  const pkg = req.query.package;
+  const version = req.query.version;
   // Add your code here
-  res.json({ success: "get call succeed!", url: req.url });
-});
-
-app.get("/tree/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "get call succeed!", url: req.url });
-});
-
-/****************************
- * Example post method *
- ****************************/
-
-app.post("/tree", function (req, res) {
-  // Add your code here
-  res.json({ success: "post call succeed!", url: req.url, body: req.body });
-});
-
-app.post("/tree/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "post call succeed!", url: req.url, body: req.body });
-});
-
-/****************************
- * Example put method *
- ****************************/
-
-app.put("/tree", function (req, res) {
-  // Add your code here
-  res.json({ success: "put call succeed!", url: req.url, body: req.body });
-});
-
-app.put("/tree/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "put call succeed!", url: req.url, body: req.body });
-});
-
-/****************************
- * Example delete method *
- ****************************/
-
-app.delete("/tree", function (req, res) {
-  // Add your code here
-  res.json({ success: "delete call succeed!", url: req.url });
-});
-
-app.delete("/tree/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "delete call succeed!", url: req.url });
+  res.json({ success: "get call succeed!", pkg, version, url: req.url });
 });
 
 app.listen(3000, function () {
