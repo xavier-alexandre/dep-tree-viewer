@@ -3,16 +3,16 @@ import { API } from "aws-amplify";
 import { ResponsiveNetwork } from "@nivo/network";
 import sampleData from "./sampleData.json";
 
-const Graph = ({ pkg }) => {
+const Graph = ({ pkg, version }) => {
   const [tree, setTree] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = API.get("DepTree", "/tree");
+      const result = API.get("DepTree", `/tree?package=${pkg}&view=${version}`);
       setTree(result);
     };
     fetchData();
-  }, [pkg]);
+  }, [pkg, version]);
 
   return (
     <div style={{ height: 500, width: 500 }}>
