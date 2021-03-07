@@ -8,7 +8,10 @@ const Graph = ({ pkg, version }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = API.get("DepTree", `/tree?package=${pkg}&view=${version}`);
+      const result = API.get(
+        "DepTree",
+        `/tree?package=${pkg}&version=${version}`
+      );
       setTree(result);
     };
     fetchData();
