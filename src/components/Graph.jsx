@@ -4,15 +4,15 @@ import { ResponsiveNetwork } from "@nivo/network";
 import sampleData from "./sampleData.json";
 
 const Graph = ({ pkg, version }) => {
-  const [tree, setTree] = useState([]);
+  const [dependencies, setDependencies] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = API.get(
+      const result = await API.get(
         "DepTree",
         `/tree?package=${pkg}&version=${version}`
       );
-      setTree(result);
+      setDependencies(result.dependencies);
     };
     fetchData();
   }, [pkg, version]);
@@ -20,10 +20,27 @@ const Graph = ({ pkg, version }) => {
   return (
     <div style={{ height: 500, width: 500 }}>
       <ResponsiveNetwork
-        links={sampleData.links}
-        nodes={sampleData.nodes}
+        links={Object.keys(dependencies).map((d) => ({
+          source: `${pkg}, ${version}`,
+          target: `${d}, ${dependencies[d]}`,
+          distance: 200,
+        }))}
+        nodes={[
+          {
+            id: `${pkg}, ${version}`,
+            radius: 20,
+            depth: 1,
+            color: "rgb(255, 152, 0)",
+          },
+          ...Object.keys(dependencies).map((d) => ({
+            id: `${d}, ${dependencies[d]}`,
+            radius: 8,
+            depth: 1,
+            color: "rgb(97, 205, 187)",
+          })),
+        ]}
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-        repulsivity={6}
+        repulsivity={300}
         iterations={60}
         nodeColor={function (e) {
           return e.color;

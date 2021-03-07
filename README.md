@@ -2,15 +2,44 @@
 
 The objective of this exercise was to build a working web application to present the complete dependencies tree of a given NPM package. For more details, see the full instructions below.
 
+See it in action here: https://master.dsj0sj3dcjqg1.amplifyapp.com
+
 ## Technical choices
+
+### Architecture
 
 The impementation needs to take into account concerns like API, scalability, monitoriing, storage... Considering the limited amount of time available (3h) to set up all this, I decided to leverage [AWS Amplify](https://aws.amazon.com/amplify/) to easily roll up the following stack.
 
-This stack offers a lot of benefit sregarding the exercice's requirements:
+![Architecture](architecture.svg)
+
+This stack offers a lot of benefits regarding the exercice's requirements:
 
 - Out-of-the-box monitoring with [AWS CloudWatch](https://aws.amazon.com/cloudwatch/)
-- AWS Lalbda functions offer easy scalability
+- AWS Lambda functions offer easy scalability
 - Standard API definition with [AWS API Gateway](https://aws.amazon.com/api-gateway/)
+
+### Frontend
+
+The frontend is composed of a _create-react-app application_. All files for this app are located at the root of the repository (for example ./src/App.js). I used the [Network chart](http://nivo.rocks/network) from the great library [Nivo](http://nivo.rocks) to implement the visualization. The code I effectively wrote is located in [./src/App.js](./src/App.js) and [./src/components/Graph.jsx](./src/components/Graph.jsx).
+
+### Backend
+
+The backend is located in [./amplify](./amplify). The REST controller I implemented can be found in file [./amplify/backend/function/deptreeviewer4ce3e2a6/src/app.js](./amplify/backend/function/deptreeviewer4ce3e2a6/src/app.js). It uses [Axios](https://www.axios.com) to perfom REST API calls. In order to optimize the performance, I decided to implement a soft caching with [Lodash's memoize](https://lodash.com/docs/4.17.15#memoize) function by memoizing the calls to https://registry.npmjs.org, so that they are run a single time for a given package/version pair. Subsequent calls to the memoized function will look up into the cached results.
+
+## Remaing actions
+
+Given the limited time available, I couldn't handle the following topics:
+
+- Currently, only the **direct** dependencies of a package are fetched. Ideally, I would want to recursively fetch all dependencies in order to build the complete dependencies graph.
+- Handle edge cases, like:
+  - no package in the input
+  - no version in the input
+  - wrong package name
+  - wrong version
+  - no connectivity to the backend
+  - no connectivity between the backend and https://registry.npmjs.org
+- Implement some tests for the Lamda function
+- Implement more advanced caching (like Redis, or AWS ElastiCache).
 
 ## Instructions
 

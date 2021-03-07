@@ -3,8 +3,8 @@ import Graph from "./components/Graph";
 import "./App.css";
 
 const App = () => {
-  const [pkg, setPkg] = useState(null);
-  const [version, setVersion] = useState(null);
+  const [pkg, setPkg] = useState("express");
+  const [version, setVersion] = useState("4.17.1");
 
   return (
     <div className="App">

@@ -27,27 +27,19 @@ app.use(function (req, res, next) {
 app.get("/tree", async (req, res) => {
   const pkg = req.query.package;
   const version = req.query.version;
-  console.log("Package", pkg);
-  console.log("Version", version);
-  const getDirectDependencies = () =>
+
+  const getPackage = () =>
     axios.get(`https://registry.npmjs.org/${pkg}/${version}`);
-  const getDirectDependenciesMemoized = memoize(getDirectDependencies);
+  const getPackageMemoized = memoize(getPackage);
 
   try {
-    console.log("Will call NPM api");
-    const deps = await getDirectDependenciesMemoized();
-    // axios
-    //   .get(`https://registry.npmjs.org/${pkg}/${version}`)
-    //   .then((res) => console.log(res));
+    const packageFromNPM = await getPackageMemoized();
 
-    // const directDepenencies = await getDirectDependenciesMemoized();
-    console.log("Finished calling NPM api", deps);
-    // Add your code here
     res.json({
       success: "get call succeed!",
       pkg,
       version,
-      //   directDepenencies,
+      dependencies: packageFromNPM.data.dependencies,
       url: req.url,
     });
   } catch (error) {
