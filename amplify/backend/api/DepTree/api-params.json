@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/tree",
+            "lambdaFunction": "deptreeviewer4ce3e2a6",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/tree"
+        }
+    ],
+    "resourceName": "DepTree",
+    "apiName": "DepTree",
+    "functionArns": [
+        {
+            "lambdaFunction": "deptreeviewer4ce3e2a6"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-deptreeviewer-dev-133627-authRole",
+        "unAuthRoleName": "amplify-deptreeviewer-dev-133627-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "deptreeviewer4ce3e2a6",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
