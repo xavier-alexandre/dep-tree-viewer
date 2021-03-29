@@ -24,16 +24,17 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Memoize calls to external API
+const getPackage = (pkg, version) =>
+  axios.get(`https://registry.npmjs.org/${pkg}/${version}`);
+const getPackageMemoized = memoize(getPackage);
+
 app.get("/tree", async (req, res) => {
   const pkg = req.query.package;
   const version = req.query.version;
 
-  const getPackage = () =>
-    axios.get(`https://registry.npmjs.org/${pkg}/${version}`);
-  const getPackageMemoized = memoize(getPackage);
-
   try {
-    const packageFromNPM = await getPackageMemoized();
+    const packageFromNPM = await getPackageMemoized(pkg, version);
 
     res.json({
       success: "get call succeed!",
